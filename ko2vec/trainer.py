@@ -15,6 +15,8 @@ from random import shuffle
 from sklearn.linear_model import LogisticRegression
 from sklearn.cross_validation import KFold
 
+# etc
+import pickle
 # todo : init from get parameter type of data class object
 
 
@@ -38,6 +40,13 @@ class AbstractTrainer(object):
     def __getitem__(self, key):
         return self.data_list[key]
 
+    def save_model(self, file_path):
+        pickle.dump(self, open(file_path,'wb'))
+
+    @classmethod
+    def load_model(cls, file_path):
+        cls = pickle.load(open(file_path,'rb'))
+        return cls
 
 class GensimDoc2VecTrainer(AbstractTrainer):
     """
@@ -63,14 +72,6 @@ class GensimDoc2VecTrainer(AbstractTrainer):
     def get_most_similar(self, word):
         return self.model.most_similar(word)
 
-    def save_model(self, file_path):
-        self.model.save(file_path)
-
-    # todo: issue : must be called with GensimDoc2VecTrainer instance as first argument
-    @classmethod
-    def load_model(cls, file_path):
-        cls.model = Doc2Vec.load(file_path)
-        return cls
 
     def cross_validation(self, k_fold=5):
         sources_dataset = []

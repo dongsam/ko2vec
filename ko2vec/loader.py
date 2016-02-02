@@ -79,5 +79,22 @@ class LoaderMysql(AbstractLoader):
     #     return data
 
 
+class LoaderMongoDB(AbstractLoader):
+    """
+    have to select doc, label, name ~
+    """
+    def __init__(self, mysql_host, mysql_user, mysql_passwd, mysql_db):
+        self.conn = pymysql.connect(
+            host=mysql_host, user=mysql_user, passwd=mysql_passwd, db=mysql_db, charset='utf8')
+        self.conn.autocommit(True)
+        self.cur = self.conn.cursor()
+
+    def query(self, query):
+        self.cur.execute(query)
+        try:
+            self.data_list = [[row[0], row[1], row[2]] for row in self.cur]
+        except:
+            self.data_list = [[row[0]] for row in self.cur]
+
 # class LoaderFile(AbstractLoader):
 #     pass
