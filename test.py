@@ -2,9 +2,9 @@
 import ko2vec
 
 mysql_host = "127.0.0.1"
-mysql_user = "userid"
-mysql_passwd = "password"
-mysql_db = "dbname"
+mysql_user = "your_user_id"
+mysql_passwd = "your_password"
+mysql_db = "your_db_name"
 
 def __main___():
 
@@ -31,10 +31,10 @@ def __main___():
     unsupervised_sources=[news_unsupervised_tagged]
     trained = ko2vec.trainer.GensimDoc2VecTrainer(sources, unsupervised_sources=unsupervised_sources, vector_size=300, epoch=20)
 
-    for i in trained.get_most_similar(u'상승/Noun'):
+    for i in trained.get_most_similar(u'상승'):
         print i[0], i[1]
 
-    for i in trained.model.most_similar(positive=[u'상승/Noun', u'급등/Noun'], negative=[u'하락/Noun']):
+    for i in trained.model.most_similar(positive=[u'상승', u'급등'], negative=[u'하락']):
         print i[0], i[1]
 
     trained.cross_validation(k_fold=5)
