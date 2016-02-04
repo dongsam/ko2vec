@@ -51,14 +51,13 @@ class AbstractLoader(object):
 
 
 class LoaderMysql(AbstractLoader):
-
     """
     have to select doc, label, name ~
     """
 
-    def __init__(self, mysql_host, mysql_user, mysql_passwd, mysql_db):
+    def __init__(self, mysql_host, mysql_user, mysql_passwd, mysql_db, mysql_port=3306):
         self.conn = pymysql.connect(
-            host=mysql_host, user=mysql_user, passwd=mysql_passwd, db=mysql_db, charset='utf8')
+            host=mysql_host, user=mysql_user, passwd=mysql_passwd, db=mysql_db, port=mysql_port, charset='utf8')
         self.conn.autocommit(True)
         self.cur = self.conn.cursor()
 
@@ -96,5 +95,12 @@ class LoaderMongoDB(AbstractLoader):
         except:
             self.data_list = [[row[0]] for row in self.cur]
 
+
+
 # class LoaderFile(AbstractLoader):
 #     pass
+
+# LoaderPath
+# LoaderURL
+# LoaderText
+
