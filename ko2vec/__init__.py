@@ -1,1 +1,3 @@
-from ko2vec import loader, preprocesser, trainer
+from loader import *
+from preprocesser import *
+from trainer import *
